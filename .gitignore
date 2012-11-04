@@ -1,0 +1,3 @@
+# Don't track params file
+/puppet/manifests/params.pp
+
