@@ -5,17 +5,17 @@
 # ############################################## Write out Params
 
 # Copy in the image build parameters.  These don't change.
-cp ../quickstart-build/QuickBase/puppet/manifests/params.pp puppet/manifests/
+cp /tmp/vagrant-puppet/manifests/params.pp puppet/manifests/
 
 # Configure Server
 
-echo "echo $1"
+PUPPET_CMD="sudo puppet apply --modulepath=\":$confdir/modules:$confdir/example42-nextgen\""
 if [[ $1 == 'test' ]]; then
-  echo puppet apply --moduledir="modules" manifests/quicktest.pp
+  PUPPET_CMD manifests/quicktest.pp
 elif [[ $1 == 'prod' ]]; then
-  echo puppet apply --moduledir="modules" manifests/quickprod.pp
+  PUPPET_CMD manifests/quickprod.pp
 elif [[ $1 == 'dev' ]]; then
-  echo puppet apply --moduledir="modules" manifests/quickdev.pp
+  PUPPET_CMD manifests/quickdev.pp
 else
   echo "usage:  $0 [ test | prod | dev ]"
 fi
