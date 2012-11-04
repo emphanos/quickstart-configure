@@ -7,15 +7,17 @@
 # Copy in the image build parameters.  These don't change.
 cp /tmp/vagrant-puppet/manifests/params.pp puppet/manifests/
 
-# Configure Server
+cd puppet/manifests
 
-PUPPET_CMD="sudo puppet apply --modulepath=\":$confdir/modules:$confdir/example42-nextgen\""
+# Configure Server
+PUPPET_DEBUG="--debug --verbose "
+PUPPET_CMD="sudo puppet apply $PUPPET_DEBUG --modulepath=\"modules:example42-nextgen\""
 if [[ $1 == 'test' ]]; then
-  PUPPET_CMD manifests/quicktest.pp
+  $PUPPET_CMD quicktest.pp
 elif [[ $1 == 'prod' ]]; then
-  PUPPET_CMD manifests/quickprod.pp
+  $PUPPET_CMD quickprod.pp
 elif [[ $1 == 'dev' ]]; then
-  PUPPET_CMD manifests/quickdev.pp
+  $PUPPET_CMD quickdev.pp
 else
   echo "usage:  $0 [ test | prod | dev ]"
 fi
