@@ -1,7 +1,6 @@
 /**
  * This should install/configure
- * - Drush
- * - Drush aware shell
+ * - Drush (and Drush aware shell)
  * - Quickstart Drush
  */ 
 class drupalserver ( $username, $mode ) {
@@ -12,12 +11,7 @@ class drupalserver ( $username, $mode ) {
 		username => $username,
 		mode => $mode,
 	}
-/* FIXME
 	class { "drupalserver::drush":
-		username => $username,
-		mode => $mode,
-	}
-	class { "drupalserver::drushawareshell":
 		username => $username,
 		mode => $mode,
 	}
@@ -25,5 +19,4 @@ class drupalserver ( $username, $mode ) {
 		username => $username,
 		mode => $mode,
 	}
-*/
 }

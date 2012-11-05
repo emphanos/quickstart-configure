@@ -9,6 +9,7 @@ LAMP_MYSQL="mysql-server libmysqlclient18 mysql-common"
 echo mysql-server-5.5 mysql-server/root_password        password quickstart | sudo debconf-set-selections
 echo mysql-server-5.5 mysql-server/root_password_again  password quickstart | sudo debconf-set-selections
 
+#done
 LAMP_PHP="php5 php-apc php5-cli php5-curl php5-gd php5-imap php5-mysql php5-mcrypt php5-sqlite php5-xdebug php5-xsl php-pear"
 
 LAMP_TOOLS="phpmyadmin"

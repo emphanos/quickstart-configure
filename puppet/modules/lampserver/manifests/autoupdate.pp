@@ -1,7 +1,7 @@
 class lampserver::autoupdate {
 
 	/* https://help.ubuntu.com/community/AutomaticSecurityUpdates */
-
+	/* FIXME is this working? */
 	package { ['unattended-upgrades']:
 		ensure => installed,
 	}
