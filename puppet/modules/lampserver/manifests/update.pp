@@ -1,9 +1,7 @@
-class quickbase::motd ( $username, $mode ) {
+class lampserver::update {
 
-  file { "/etc/motd" :
-    content => template("motd/motd.erb")
-    mode => 444,
-  }
-  /* Thank you! http://patorjk.com/software/taag/#p=display&f=Small%20Slant&t=PRODUCTION */
+	/* download and apply OS updates */
+	exec {"sudo apt-get -yq update; sudo apt-get -yq upgrade; sudo apt-get -yq autoremove":}
+
 }
 

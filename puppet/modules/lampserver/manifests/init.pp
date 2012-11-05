@@ -14,15 +14,34 @@ class lampserver( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 	
-	class lampserver::update
-/*	class lampserver::lamp { $username, $mode }
-x	class lampserver::phpmyadmin { $username, $mode }
-x	class lampserver::xdebug { $username, $mode } */
-	class lampserver::tools
-	class lampserver::git { $username, $mode }
-	class lampserver::motd { $username, $mode }
-	class lampserver::autoupdate { $username, $mode }
-	class lampserver::dnsmasq
-	
+	include lampserver::update
+/*
+	class { "lampserver::lamp":
+		username => $username,
+		mode => $mode,
+	}
+	class { "lampserver::phpmyadmin":
+		username => $username,
+		mode => $mode,
+	}
+	class { "lampserver::xdebug":
+		username => $username,
+		mode => $mode,
+	}
+*/
+	include lampserver::tools
+/*
+	class { "lampserver::git":
+		username => $username,
+		mode => $mode,
+	}
+*/
+	class { "lampserver::motd":
+		username => $username,
+		mode => $mode,
+	}
+	include lampserver::autoupdate
+	include lampserver::dnsmasq
+
 }
 

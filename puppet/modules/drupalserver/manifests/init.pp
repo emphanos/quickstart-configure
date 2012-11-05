@@ -8,10 +8,22 @@ class drupalserver ( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
-	class lampserver { $username, $mode }
-
-	class drupalserver::drush { $username, $mode }
-	class drupalserver::drushawareshell { $username, $mode }
-	class drupalserver::quickstartdrush { $username, $mode }
-	
+	class { "lampserver":
+		username => $username,
+		mode => $mode,
+	}
+/* FIXME
+	class { "drupalserver::drush":
+		username => $username,
+		mode => $mode,
+	}
+	class { "drupalserver::drushawareshell":
+		username => $username,
+		mode => $mode,
+	}
+	class { "drupalserver::quickstartdrush":
+		username => $username,
+		mode => $mode,
+	}
+*/
 }
