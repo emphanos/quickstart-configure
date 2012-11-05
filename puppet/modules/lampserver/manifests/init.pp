@@ -13,29 +13,31 @@
 class lampserver( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
-	
+
+/*	
 	include lampserver::update
 	class { "lampserver::lamp":
 		username => $username,
 		mode => $mode,
 	}
-/*
+
 	class { "lampserver::phpmyadmin":
 		username => $username,
 		mode => $mode,
 	}
+/*
 	class { "lampserver::xdebug":
 		username => $username,
 		mode => $mode,
 	}
 */
-/*	include lampserver::tools  FIXME debug time*/
-/*
-	class { "lampserver::gitaware":
+/*	include lampserver::tools  FIXME debug time */
+
+	class { "lampserver::bash_profile":
 		username => $username,
 		mode => $mode,
 	}
-*/
+
 	class { "lampserver::motd":
 		username => $username,
 		mode => $mode,

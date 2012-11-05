@@ -8,7 +8,7 @@
 cp /tmp/vagrant-puppet/manifests/params.pp puppet/manifests/
 
 # Configure Server
-#PUPPET_DEBUG="--debug --verbose "
+PUPPET_DEBUG="--debug --verbose "
 PUPPET_CMD="sudo puppet apply $PUPPET_DEBUG --modulepath `pwd`/puppet/modules:`pwd`/puppet/example42-nextgen"
 
 cd puppet/manifests

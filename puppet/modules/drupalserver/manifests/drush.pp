@@ -4,18 +4,12 @@ class drupalserver::drush ( $username, $mode ) {
 		ensure => installed,
 	}
 
-	exec { "drush update":
-		command => "sudo drush -y self-update",
+	exec { "drushupgrade":
+		command => "drush -y dl drush --destination='/usr/share'",
 		require => Package[[drush]],
 	}
 
-	/* FIXME this isn't adding to the .bash_profile */
-	exec { "drush .drush_bashrc":
-		command => "echo \"if [ -f ~/.drush_bashrc ] ; then . /usr/share/drush/examples/example.drushrc ; fi\" >> /home/${username}/.bash_profile",
-		unless => "grep -q '/usr/share/drush/examples/example.drushrc' /home/${username}/.bash_profile",
-		require => Package[[drush]],
-		user => $username,
-	}
+	/* see lampserver:bash_profile for drush command completion */
 
 }
 
