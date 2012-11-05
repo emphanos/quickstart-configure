@@ -4,7 +4,7 @@
  * - Drush aware shell
  * - Quickstart Drush
  */ 
-class drupalserver( $username, $mode ) {
+class drupalserver ( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
