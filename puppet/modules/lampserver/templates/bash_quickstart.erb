@@ -1,0 +1,13 @@
+### NOTE: CHANGES TO THIS FILE WILL BE OVERWRITTEN ###
+
+# Git aware shell
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+PS1='\u@\h \w$(__git_ps1 " (%s)")\\$ '
+
+# Drush command completion
+if [ -f /usr/share/drush/examples/example.bashrc ] ; then 
+	source /usr/share/drush/examples/example.bashrc
+fi
+
+

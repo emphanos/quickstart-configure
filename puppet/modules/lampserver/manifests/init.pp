@@ -14,7 +14,6 @@ class lampserver( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
-/*	
 	include lampserver::update
 	class { "lampserver::lamp":
 		username => $username,

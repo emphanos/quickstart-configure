@@ -5,12 +5,14 @@ class lampserver::lamp ( $username, $mode ) {
 	class { "apache": }
 	apache::module { 'ssl': }
 	apache::module { 'rewrite': }
-	apache::module { 'rewrite': ensure => absent}
+	apache::module { 'cgi': ensure => absent}
 	apache::module { 'autoindex': ensure => absent}
 
 	file { "apache_default":
 		path    => "/etc/apache2/sites-available/000-default",
 		content => template("lampserver/000-default.erb"),
+		require => Class[apache],
+		notify => Service[apache],
 	}
 	file { "apache_default_ssl":
 		path    => "/etc/apache2/sites-available/default-ssl",
@@ -18,7 +20,7 @@ class lampserver::lamp ( $username, $mode ) {
 	}
 	file { "apache_ports_conf":
 		path    => "/etc/apache2/ports.conf",
-		content => template("lampserver/prots.conf.erb"),
+		content => template("lampserver/ports.conf.erb"),
 	}
 
 
