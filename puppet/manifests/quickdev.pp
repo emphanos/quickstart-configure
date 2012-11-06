@@ -14,8 +14,10 @@ node default {
 	username => "$params::username",
 	mode => "test",
   }
-  class { "desktop":
+  class { "desktopenv":
 	username => "$params::username",
+	mode => "test",
+	require => Class[drupalserver],
   }
 }
 

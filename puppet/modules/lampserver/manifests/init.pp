@@ -23,6 +23,7 @@ class lampserver( $username, $mode ) {
 	class { "lampserver::phpmyadmin":
 		username => $username,
 		mode => $mode,
+		requires => Class["lampserver::lamp"],
 	}
 /*
 	class { "lampserver::xdebug":
@@ -30,7 +31,7 @@ class lampserver( $username, $mode ) {
 		mode => $mode,
 	}
 */
-/*	include lampserver::tools  FIXME debug time */
+	include lampserver::tools
 
 	class { "lampserver::bash_profile":
 		username => $username,

@@ -2,10 +2,13 @@ class lampserver::phpmyadmin ( $username, $mode ) {
 
 	exec { "phpmyadmin_config":
 		command => "cat << EOF | debconf-set-selections
-mysql-server-5.0 mysql-server/root_password password $username
-mysql-server-5.0 mysql-server/root_password_again password $username
-mysql-server-5.0 mysql-server/root_password seen true
-mysql-server-5.0 mysql-server/root_password_again seen true
+echo phpmyadmin       phpmyadmin/reconfigure-webserver  text     apache2    | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/dbconfig-install       boolean  true       | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/app-password-confirm   password quickstart | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/mysql/admin-pass       password quickstart | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/password-confirm       password quickstart | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/setup-password         password quickstart | sudo debconf-set-selections
+echo phpmyadmin       phpmyadmin/mysql/app-pass         password quickstart | sudo debconf-set-selections
 EOF",
 		require => Class[ [apache, php, mysql] ],
 	}
