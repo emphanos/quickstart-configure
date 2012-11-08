@@ -6,7 +6,7 @@ class desktop ( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
-	class { "desktopenv::cinnamon":
+	class { "desktop::cinnamon":
 		username => $username,
 		mode => $mode,
 	}

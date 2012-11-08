@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# $1 mode
-
 # ############################################## Write out Params
 
 # Copy in the image build parameters.  These don't change.
@@ -10,6 +8,9 @@ cp /vagrant/QuickBase/puppet/manifests/params.pp puppet/manifests/
 
 # Configure Server
 PUPPET_DEBUG="--debug --verbose "
+if [ -z $2 ] ; then 
+	PUPPET_DEBUG=
+fi
 PUPPET_CMD="sudo puppet apply $PUPPET_DEBUG --modulepath `pwd`/puppet/modules:`pwd`/puppet/example42-nextgen"
 
 cd puppet/manifests
@@ -22,6 +23,6 @@ elif [[ $1 == 'prod' ]]; then
 elif [[ $1 == 'dev' ]]; then
   $PUPPET_CMD quickdev.pp
 else
-  echo "usage:  $0 [ test | prod | dev ]"
+  echo "usage:  $0 [ test | prod | dev ] [debug]"
 fi
 

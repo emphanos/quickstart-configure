@@ -9,9 +9,6 @@ class drupalserver::quickstartdrush ( $username, $mode ) {
 	  mode   => 770,
 	}
 */
-	package { ['git']:
-		ensure => installed,
-	}
 
 	/* Clone read-only repo for further configuration */
 	exec { "quickstart-drush": 

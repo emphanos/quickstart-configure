@@ -23,7 +23,7 @@ class lampserver( $username, $mode ) {
 	class { "lampserver::phpmyadmin":
 		username => $username,
 		mode => $mode,
-		requires => Class["lampserver::lamp"],
+		require => Class["lampserver::lamp"],
 	}
 /*
 	class { "lampserver::xdebug":
