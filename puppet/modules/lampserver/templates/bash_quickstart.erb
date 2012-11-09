@@ -10,4 +10,11 @@ if [ -f /usr/share/drush/examples/example.bashrc ] ; then
 	source /usr/share/drush/examples/example.bashrc
 fi
 
+# search in files and directories
+search () { grep -rHinC0 "$*" .; }
+
+# dereference links in current path.
+deref () { cd $(pwd -P); }
+
+
 
