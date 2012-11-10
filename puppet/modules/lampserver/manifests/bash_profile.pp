@@ -1,3 +1,4 @@
+/* Setup command line fanciness */
 class lampserver::bash_profile ( $username, $mode ) {
 
 	/* Run .bashrc on ssh logins */
@@ -20,10 +21,10 @@ class lampserver::bash_profile ( $username, $mode ) {
 
 	/* Add bash_quickstart to bashrc */
 	$line = template("lampserver/bashrc_snip.erb")
-	exec { "bashrc_boostrap":
+	exec { "bash_quickstart":
 		user => $username,
-		command => "/bin/echo '${line}' >> ~/.bashrc",
-		unless => "/bin/grep -qF '~/.bash_quickstart' ~/.bashrc && echo true",
+		command => "/bin/echo '${line}' >> /home/${username}/.bashrc",
+		unless => "/bin/grep -qF 'bash_quickstart' /home/${username}/.bashrc",
 	}
 
 	/* http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html */

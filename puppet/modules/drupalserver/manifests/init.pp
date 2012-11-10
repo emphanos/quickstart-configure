@@ -5,18 +5,40 @@
  */ 
 class drupalserver ( $username, $mode ) {
 
+/* Set defaults */
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
-	class { "lampserver":
-		username => $username,
-		mode => $mode,
+
+/* Install the LAMP Server */
+	class { "lampserver": username => $username, mode => $mode, }
+
+
+/* Install Drush */
+	package { ['drush']: ensure => installed, }
+	/* Update Drush */
+	exec { "drush-upgrade":
+		command => "drush -y dl drush --destination='/usr/share'",
+		require => Package[drush],
 	}
-	class { "drupalserver::drush":
-		username => $username,
-		mode => $mode,
+	/* see lampserver:bash_profile for drush command completion */
+
+
+/* Install Quickstart Drush Extensions */
+	exec { "quickstart-drush": 
+	  command => "git clone --recursive git://github.com/quickstart/quickstart-drupal.git /var/quickstart/quickstart-drupal",
+	  user => $username,
+	  unless => "test -d /var/quickstart/quickstart-drupal/.git",
+	  require => [ Package['git'], Exec['drush-upgrade' ] ],
 	}
-	class { "drupalserver::quickstartdrush":
-		username => $username,
-		mode => $mode,
+	file { "/home/${username}/.drush":
+		ensure => 'directory',
+		owner => $username,
 	}
+	file { "/home/${username}/.drush/quickstart-drush":
+		ensure => 'link',
+		owner => $username,
+		target => '/var/quickstart/quickstart-drupal',
+		require => [File["/home/${username}/.drush"], Exec[quickstart-drush] ],
+	}
+
 }

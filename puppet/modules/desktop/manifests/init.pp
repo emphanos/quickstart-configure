@@ -6,8 +6,8 @@ class desktop ( $username, $mode ) {
 
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
-	class { "desktop::cinnamon":
-		username => $username,
-		mode => $mode,
-	}
+	include desktop::cinnamon
+	include desktop::tools
+	include desktop::ide_netbeans
+
 }

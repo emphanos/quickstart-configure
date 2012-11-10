@@ -1,4 +1,4 @@
-class desktop::cinnamon ( $username, $mode ) {
+class desktop::cinnamon {
 
 	package { ['python-software-properties']: }
 
