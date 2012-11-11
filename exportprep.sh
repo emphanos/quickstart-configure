@@ -1,8 +1,8 @@
-# Remove unnecessary packages
+echo " * Remove unnecessary packages"
 sudo apt-get -y install deborphan 
 sudo deborphan --guess-all | xargs sudo apt-get -y remove --purge
 
-# Clean up apt packages
+echo " * Clean up apt packages"
 sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 sudo apt-get -y clean
@@ -20,7 +20,6 @@ sudo apt-get -y clean
 #sudo find /var/log/ -name '*.gz' -type f -print0 -exec sudo rm '{}' \;
 #logrotate -f -s /home/quickstart/quickstart/setup_scripts/logs/logrotate-status.log /home/quickstart/config/clear-all-logs.conf
 
-# zero disk for better compression
-echo " * Zeroing disk.  This takes awhile ..."
+echo " *  zero disk for better compression.  This takes awhile ..."
 sudo dd if=/dev/zero of=/zerofile; sudo rm /zerofile
 

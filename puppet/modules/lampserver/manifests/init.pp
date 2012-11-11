@@ -45,19 +45,26 @@ class lampserver( $username, $mode ) {
 
 
 /* Setup Logs */
+
 	$logdir = "/var/quickstart/logs"
 	$configdir = "/var/quickstart/config"
-	exec {"log_conf_dirs":
-		command => "mkdir -p ${logdir} ; mkdir -p ${configdir}",
-		user => $username,
-		require => Class["lampserver::lamp"],
+
+	file { "${logdir}": 
+		owner: $username,
+		group: "www-data",
+		mode: 755,
+	}
+	file { "${configdir}": 
+		owner: $username,
+		group: "www-data",
+		mode: 755,
 	}
 	class { "lampserver::lamp_logs":
 		username => $username,
 		mode => $mode,
 		logdir => $logdir,
 		configdir => $configdir,
-		require => Exec["log_conf_dirs"],
+		require => [ File["${logdir}"], File["${configdir}"] ],
 	}
 
 

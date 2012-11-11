@@ -75,12 +75,12 @@ EOF",
 		ensure => directory,
 		owner => $username,
 		group => $username,
-		require => Class["lampserver::lamp_logs"],
+		require => File["/var/quickstart/logs/mail"],
 	}
 	file { "/var/quickstart/logs/mail/email.php":
 		content => template("lampserver/email.php.erb"),
 		mode => 755,
-		require => [ Class["lampserver::lamp_logs"], File['/var/quickstart/logs/mail'] ], 
+		require => File["/var/quickstart/logs/mail"], 
 	}
 
 	/* configure php.ini to test or prod */
