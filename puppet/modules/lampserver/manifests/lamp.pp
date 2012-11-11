@@ -75,7 +75,7 @@ EOF",
 		ensure => directory,
 		owner => $username,
 		group => $username,
-		require => File["/var/quickstart/logs/mail"],
+		require => File["/var/quickstart/logs"],
 	}
 	file { "/var/quickstart/logs/mail/email.php":
 		content => template("lampserver/email.php.erb"),
