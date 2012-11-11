@@ -8,9 +8,9 @@ class desktop ( $username, $mode ) {
 
 	include desktop::cinnamon
 
-/* install random graphical tools */
 	package { ['gitg']: ensure => installed, }
 
-	include desktop::ide_netbeans
+	class { "desktop::ide_netbeans": username => $username, mode => $mode, }
+	class { "desktop::gedit": username => $username, mode => $mode, }
 
 }

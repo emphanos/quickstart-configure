@@ -8,16 +8,18 @@ Exec { path => "/bin:/sbin:/usr/bin:/usr/sbin" }
 
 /* entry point */
 node default {
-  include params
+	include params
 
-  class { "drupalserver":
-	username => "$params::username",
-	mode => "test",
-  }
-  class { "desktop":
-	username => "$params::username",
-	mode => "test",
-	require => Class[drupalserver],
-  }
+	class { "drupalserver": username => "$params::username", mode => "test", }
+	class { "desktop":
+		username => "$params::username",
+		mode => "test",
+		require => Class[drupalserver],
+	}
+	class { "prepexport": 
+		username => "$params::username", 
+		mode => "test", 
+		require => Class[desktop],
+	}
 }
 

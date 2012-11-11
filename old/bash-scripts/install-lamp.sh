@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # ##### Install LAMP packages
-<<<<<
 
 # Define package names, and debconf config values.  Keep package names in sync.
 LAMP_APACHE="libapache2-mod-php5"
@@ -31,8 +30,6 @@ sudo a2enmod ssl
 sudo a2enmod rewrite
 sudo a2dismod cgi
 sudo a2dismod autoindex
-
->>>>>>
 
 # configure default site
 echo "<VirtualHost *:80>
@@ -74,7 +71,6 @@ echo "<IfModule mod_ssl.c>
 </VirtualHost>
 </IfModule>" | sudo tee /etc/apache2/sites-available/default-ssl > /dev/null
 
-???????
 
 sudo a2ensite default-ssl
 
@@ -100,11 +96,9 @@ sudo sed -i 's/;error_log = php_errors.log/error_log = \/var\/log\/php-error.log
 sudo sed -i 's/display_errors = Off/display_errors = On/g'                           /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 sudo sed -i 's/display_startup_errors = Off/display_startup_errors = On/g'           /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 
-!!!
 # Fix comment bug that will show warning on command line
 sudo sed -i 's/# /\/\/ /g'            /etc/php5/cli/conf.d/mcrypt.ini
 sudo sed -i 's/# /\/\/ /g'            /etc/php5/cli/conf.d/imap.ini
-...
 
 # Install upload progress (warning in D7)
 sudo pecl -q install uploadprogress

@@ -33,10 +33,12 @@ class drupalserver ( $username, $mode ) {
 	file { "/home/${username}/.drush":
 		ensure => 'directory',
 		owner => $username,
+		group => $username,
 	}
 	file { "/home/${username}/.drush/quickstart-drush":
 		ensure => 'link',
 		owner => $username,
+		group => $username,
 		target => '/var/quickstart/quickstart-drupal',
 		require => [File["/home/${username}/.drush"], Exec[quickstart-drush] ],
 	}

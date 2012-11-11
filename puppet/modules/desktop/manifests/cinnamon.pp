@@ -1,3 +1,4 @@
+/* Install Cinnamon desktop */
 class desktop::cinnamon {
 
 	package { ['python-software-properties']: }

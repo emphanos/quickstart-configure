@@ -43,7 +43,7 @@ EOF",
 		command => "sed -i 's/#log_slow_queries/log_slow_queries/g' /etc/mysql/my.cnf; sed -i 's/#long_query_time/long_query_time/g' /etc/mysql/my.cnf",
 		require => Class[mysql],
 	}
-
+ 
 
 /* php */
 	class { 'php': }
@@ -61,6 +61,7 @@ EOF",
 	exec { "uploadprogress":
 		command => "pecl install uploadprogress",
 		require => Php::Module[pear],
+		unless => "pecl list | grep uploadprogress",
 	}
 	file { "/etc/php5/apache2/conf.d/uploadprogress.ini": 
 		content => "extension=uploadprogress.so",
