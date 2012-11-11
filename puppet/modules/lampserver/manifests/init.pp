@@ -21,7 +21,7 @@ class lampserver( $username, $mode ) {
 	- user created
 	- /var/quickstart created
 	- /var/quickstart/quickstart-configure cloned
-*/
+	*/
 
 
 /* Install lampserver devops tools */
@@ -41,9 +41,7 @@ class lampserver( $username, $mode ) {
 
 
 /* Install xdebug */
-/*
 	class { "lampserver::xdebug": username => $username, mode => $mode, }
-*/
 
 
 /* Setup Logs */
@@ -77,5 +75,6 @@ class lampserver( $username, $mode ) {
 
 /* all .dev domains point to localhost */
 	include lampserver::dnsmasq
+
 }
 

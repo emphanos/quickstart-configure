@@ -1,5 +1,6 @@
-quickstart-configure
 ====================
+quickstart-configure
+--------------------
 
 Tools for configuring a Quickstart machine.
 
@@ -14,3 +15,12 @@ Didn't do that and getting errors?
 Try this:
 
     git submodule update --init --recursive
+
+
+====================
+Branding and documentation files:
+--------------------
+
+/puppet/modules/lampserver/templates/index.html.erb
+/puppet/modules/lampserver/templates/motd.erb
+

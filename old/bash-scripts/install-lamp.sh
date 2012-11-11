@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ##### Install LAMP packages
+<<<<<
 
 # Define package names, and debconf config values.  Keep package names in sync.
 LAMP_APACHE="libapache2-mod-php5"
 
-<<<<<
 LAMP_MYSQL="mysql-server libmysqlclient18 mysql-common"
 echo mysql-server-5.5 mysql-server/root_password        password quickstart | sudo debconf-set-selections
 echo mysql-server-5.5 mysql-server/root_password_again  password quickstart | sudo debconf-set-selections
@@ -23,7 +23,6 @@ echo phpmyadmin       phpmyadmin/mysql/app-pass         password quickstart | su
 
 # Now install the packages.  debconf shouldn't need to ask so many questions.
 sudo apt-get -yq install $LAMP_APACHE $LAMP_MYSQL $LAMP_PHP $LAMP_TOOLS
->>>>>>
 
 
 # ###### Configure APACHE
@@ -33,7 +32,7 @@ sudo a2enmod rewrite
 sudo a2dismod cgi
 sudo a2dismod autoindex
 
-????
+>>>>>>
 
 # configure default site
 echo "<VirtualHost *:80>

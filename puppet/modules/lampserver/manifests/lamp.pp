@@ -1,34 +1,32 @@
+/* install a LAMP stack */
 class lampserver::lamp ( $username, $mode ) {
 
-	/* apache */
 
+/* apache */
 	class { "apache": }
 	apache::module { 'ssl': }
 	apache::module { 'rewrite': }
 	apache::module { 'cgi': ensure => absent}
 	apache::module { 'autoindex': ensure => absent}
 
-/* Is this even necessary any more?
-	file { "apache_default":
-		path    => "/etc/apache2/sites-available/000-default",
-		content => template("lampserver/000-default.erb"),
-		notify => Service[apache],
+	file { "/var/www/index.html":
+		ensure => absent,
+		require => Class[apache],
 	}
-	file { "apache_default_ssl":
-		path    => "/etc/apache2/sites-available/default-ssl",
-		content => template("lampserver/default-ssl.erb"),
-		notify => Service[apache],
+	file { "/var/www/index.php":
+		content => template("lampserver/index.php.erb"),
+		require => Class[apache],
 	}
-	file { "apache_ports_conf":
-		path    => "/etc/apache2/ports.conf",
-		content => template("lampserver/ports.conf.erb"),
-		notify => Service[apache],
+
+	apache::vhost { "default":
+		template => "lampserver/000-default.erb",
 	}
-*/
+	apache::vhost { "default_ssl":
+		template => "lampserver/default-ssl.erb",
+	}
 
 
-	/* mysql */
-
+/* mysql */
 	exec { "mysql_config":
 		command => "cat << EOF | debconf-set-selections
 mysql-server-5.0 mysql-server/root_password password $username
@@ -40,10 +38,14 @@ EOF",
 	class { "mysql": 
 		require => Exec["mysql_config"],
 	}
+	/* augeas didn't work here with my.cnf */
+	exec { "mysql_config_test":
+		command => "sed -i 's/#log_slow_queries/log_slow_queries/g' /etc/mysql/my.cnf; sed -i 's/#long_query_time/long_query_time/g' /etc/mysql/my.cnf",
+		require => Class[mysql],
+	}
 
 
-	/* php */
-
+/* php */
 	class { 'php': }
 	php::module { "apc": module_prefix => "php-" }
 	php::module { "cli": }
@@ -55,4 +57,25 @@ EOF",
 	php::module { "pear": module_prefix => "php-" }
 	php::module { "sqlite": }
 	php::module { "xsl": }
+
+	exec { "uploadprogress":
+		command => "pecl install uploadprogress",
+		require => Php::Module[pear],
+	}
+	file { "/etc/php5/apache2/conf.d/uploadprogress.ini": 
+		content => "extension=uploadprogress.so",
+		require => Class[php],
+		notify => Service[apache],
+	}
+	file { "/etc/php5/apache2/conf.d/quickstart.ini": 
+		content => template("lampserver/quicktest.php.ini.erb"),
+		require => Class[php],
+		notify => Service[apache],
+	}
+	file { "/etc/php5/cli/conf.d/quickstart.ini": 
+		content => template("lampserver/quicktest.php.ini.erb"),
+		require => Class[php],
+		notify => Service[apache],
+	}
+		
 }

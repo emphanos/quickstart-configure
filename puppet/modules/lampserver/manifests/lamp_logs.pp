@@ -1,7 +1,8 @@
 /* setup logs */
 class lampserver::lamp_logs ( $username, $mode, $logdir, $configdir ) {
 
-	/* Link Logs */
+
+/* Link Logs */
 	lampserver::lamp_link { "${logdir}/apache-error.log":
 		path=> "${logdir}/apache-error.log",
 		target => "/var/log/apache2/error.log",
@@ -37,45 +38,44 @@ This will list the files and where they link to.",
 	}
 
 
-	/* FIXME why aren't these being created */
-	/* Link Config */
-	lampserver::lamp_link { "${confdir}/apache2.conf":
-		path => "${confdir}/apache2.conf",
+/* Link Config */
+	lampserver::lamp_link { "${configdir}/apache2.conf":
+		path => "${configdir}/apache2.conf",
 		target => "/etc/apache2/apache2.conf",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/httpd.conf":
-		path => "${confdir}/httpd.conf",
+	lampserver::lamp_link { "${configdir}/httpd.conf":
+		path => "${configdir}/httpd.conf",
 		target => "/etc/apache2/httpd.conf",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/ports.conf":
-		path => "${confdir}/ports.conf",
+	lampserver::lamp_link { "${configdir}/ports.conf":
+		path => "${configdir}/ports.conf",
 		target => "/etc/apache2/ports.conf",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/apache-sites-enabled":
-		path => "${confdir}/apache-sites-enabled",
+	lampserver::lamp_link { "${configdir}/apache-sites-enabled":
+		path => "${configdir}/apache-sites-enabled",
 		target => "/etc/apache2/sites-enabled/",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/php-apache.ini":
-		path => "${confdir}/php-apache.ini",
+	lampserver::lamp_link { "${configdir}/php-apache.ini":
+		path => "${configdir}/php-apache.ini",
 		target => "/etc/php5/apache2/php.ini",
 		owner => $username,
 	}
-	lampserver::lamp_link {"${confdir}/php-cli.ini":
-		path => "${confdir}/php-cli.ini",
+	lampserver::lamp_link {"${configdir}/php-cli.ini":
+		path => "${configdir}/php-cli.ini",
 		target => "/etc/php5/cli/php.ini",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/mysql.cnf":
-		path => "${confdir}/mysql.cnf",
+	lampserver::lamp_link { "${configdir}/mysql.cnf":
+		path => "${configdir}/mysql.cnf",
 		target => "/etc/mysql/my.cnf",
 		owner => $username,
 	}
-	lampserver::lamp_link { "${confdir}/hosts":
-		path => "${confdir}/hosts",
+	lampserver::lamp_link { "${configdir}/hosts":
+		path => "${configdir}/hosts",
 		target => "/etc/hosts",
 		owner => $username,
 	}

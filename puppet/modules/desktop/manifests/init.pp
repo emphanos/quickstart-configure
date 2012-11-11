@@ -7,7 +7,10 @@ class desktop ( $username, $mode ) {
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
 
 	include desktop::cinnamon
-	include desktop::tools
+
+/* install random graphical tools */
+	package { ['gitg']: ensure => installed, }
+
 	include desktop::ide_netbeans
 
 }
