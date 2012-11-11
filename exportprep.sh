@@ -5,21 +5,22 @@ sudo apt-get -y clean
 
 # Remove unnecessary packages
 sudo apt-get -y install deborphan 
-sudo deborphan --guess-all | xargs apt-get -y remove --purge
+sudo deborphan --guess-all | xargs sudo apt-get -y remove --purge
 
 # Remove apt package list cache ~40mb
 # This breaks apt till an "apt-get update" happens
 # rm -f /var/lib/apt/lists/* 
 # rm -f /var/lib/apt/lists/partial/*
 
-# empty the trash 
-sudo rm -rf /home/${username}/.local/share/Trash/files/*
-sudo rm -rf /home/${username}/.local/share/Trash/info/*
+# empty the trash FIXME can probably use find for this
+#sudo rm -rf /home/${username}/.local/share/Trash/files/*
+#sudo rm -rf /home/${username}/.local/share/Trash/info/*
 
-# trim logs
-sudo find /var/log/ -name '*.gz' -type f -print0 -exec sudo rm '{}' \;
+# trim logs FIXME
+#sudo find /var/log/ -name '*.gz' -type f -print0 -exec sudo rm '{}' \;
 #logrotate -f -s /home/quickstart/quickstart/setup_scripts/logs/logrotate-status.log /home/quickstart/config/clear-all-logs.conf
 
 # zero disk for better compression
+echo " * Zeroing disk.  This takes awhile ..."
 sudo dd if=/dev/zero of=/zerofile; sudo rm /zerofile
 

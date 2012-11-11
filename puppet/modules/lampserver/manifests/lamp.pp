@@ -58,6 +58,7 @@ EOF",
 	php::module { "sqlite": }
 	php::module { "xsl": }
 
+	/* configure uploadprogress */
 	exec { "uploadprogress":
 		command => "pecl install uploadprogress",
 		require => Php::Module[pear],
@@ -68,6 +69,22 @@ EOF",
 		require => Class[php],
 		notify => Service[apache],
 	}
+
+	/* setup email logging */
+	file { "/var/quickstart/logs/mail":
+		ensure => directory,
+		owner => $username,
+		group => $username,
+		require => Exec["log_conf_dirs"],
+	}
+	file { "/var/quickstart/logs/mail/email.php":
+		content => template("lampserver/email.php.erb"),
+		mode => 755,
+		require => File['/var/quickstart/logs/mail'], 
+		notify => Service[apache],
+	}
+
+	/* configure php.ini to test or prod */
 	file { "/etc/php5/apache2/conf.d/quickstart.ini": 
 		content => template("lampserver/quicktest.php.ini.erb"),
 		require => Class[php],
