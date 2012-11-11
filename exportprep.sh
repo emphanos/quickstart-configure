@@ -1,11 +1,11 @@
+# Remove unnecessary packages
+sudo apt-get -y install deborphan 
+sudo deborphan --guess-all | xargs sudo apt-get -y remove --purge
+
 # Clean up apt packages
 sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 sudo apt-get -y clean
-
-# Remove unnecessary packages
-sudo apt-get -y install deborphan 
-sudo deborphan --guess-all | xargs sudo apt-get -y remove --purge
 
 # Remove apt package list cache ~40mb
 # This breaks apt till an "apt-get update" happens

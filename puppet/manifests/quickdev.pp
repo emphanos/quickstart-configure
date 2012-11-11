@@ -16,10 +16,5 @@ node default {
 		mode => "test",
 		require => Class[drupalserver],
 	}
-	class { "prepexport": 
-		username => "$params::username", 
-		mode => "test", 
-		require => Class[desktop],
-	}
 }
 
