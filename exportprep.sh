@@ -20,6 +20,6 @@ sudo apt-get -y clean
 #sudo find /var/log/ -name '*.gz' -type f -print0 -exec sudo rm '{}' \;
 #logrotate -f -s /home/quickstart/quickstart/setup_scripts/logs/logrotate-status.log /home/quickstart/config/clear-all-logs.conf
 
-echo " *  zero disk for better compression.  This takes awhile ..."
+echo " *  zero disk free space for better compression.  This takes awhile ..."
 sudo dd if=/dev/zero of=/zerofile; sudo rm /zerofile
 

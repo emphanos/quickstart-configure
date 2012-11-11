@@ -50,14 +50,14 @@ class lampserver( $username, $mode ) {
 	$configdir = "/var/quickstart/config"
 
 	file { "${logdir}": 
-		owner: $username,
-		group: "www-data",
-		mode: 755,
+		ensure => directory,
+		owner => $username,
+		group => "www-data",
 	}
 	file { "${configdir}": 
-		owner: $username,
-		group: "www-data",
-		mode: 755,
+		ensure => directory,
+		owner => $username,
+		group => "www-data",
 	}
 	class { "lampserver::lamp_logs":
 		username => $username,
