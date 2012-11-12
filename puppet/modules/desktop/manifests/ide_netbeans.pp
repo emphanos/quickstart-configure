@@ -13,13 +13,18 @@ class desktop::ide_netbeans ($username, $mode) {
 		user => $username,
 		creates => $destination,
 	}
+	exec { "netbeans_install_permissions":
+		command => "chmod 755 ${destination}",
+		user => $username,
+		require => [ Exec[netbeans_download], Package[openjdk-6-jdk] ], 
+	}
 		
 	exec { "netbeans_install":
-		command => "chmod 644 ${destination} ; ${destination} --silent --nospacecheck",
+		command => "${destination} --silent --nospacecheck",
 		user => $username,
-		timeout => 600,
+		timeout => 900,
 		creates => $install_dir,
-		require => [ Exec[netbeans_download], Package[openjdk-6-jdk] ], 
+		require => [ Exec[netbeans_install_permissions], Package[openjdk-6-jdk] ], 
 	}
 
 }
