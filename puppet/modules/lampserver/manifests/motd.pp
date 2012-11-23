@@ -1,3 +1,4 @@
+/* Thank you! http://patorjk.com/software/taag/ */
 class lampserver::motd ( $username, $mode ) {
 
   $version = $params::version
@@ -6,6 +7,5 @@ class lampserver::motd ( $username, $mode ) {
     content => template("lampserver/motd.erb"),
     mode => 444,
   }
-  /* Thank you! http://patorjk.com/software/taag/ */
 
 }

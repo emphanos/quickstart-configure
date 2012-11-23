@@ -19,7 +19,7 @@ class drupalserver ( $username, $mode ) {
 	exec { "drush-upgrade":
 		command => "drush -y dl drush --destination='/usr/share'",
 		require => Package[drush],
-	}
+	} ->
 	/* see lampserver:bash_profile for drush command completion */
 
 
@@ -29,12 +29,12 @@ class drupalserver ( $username, $mode ) {
 	  user => $username,
 	  unless => "test -d /var/quickstart/quickstart-drupal/.git",
 	  require => [ Package['git'], Exec['drush-upgrade' ] ],
-	}
+	} ->
 	file { "/home/${username}/.drush":
 		ensure => 'directory',
 		owner => $username,
 		group => $username,
-	}
+	} ->
 	file { "/home/${username}/.drush/quickstart-drush":
 		ensure => 'link',
 		owner => $username,

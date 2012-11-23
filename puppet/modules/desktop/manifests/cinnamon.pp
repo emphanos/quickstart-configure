@@ -8,8 +8,12 @@ class desktop::cinnamon {
 		require => Package["python-software-properties"],
 	}
 
-	package { ['cinnamon', 'ubuntu-desktop', 'gnome-session', 'lightdm', 'unity-greeter']: 
+	package { ['ubuntu-desktop', 'gnome-session', 'lightdm', 'unity-greeter']: 
 		require => Exec["cinnamon_ppa"],
+	}
+
+	package { ['cinnamon']:
+		require => Package[ubuntu-desktop],
 	}
 
 }

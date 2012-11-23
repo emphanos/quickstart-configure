@@ -14,6 +14,8 @@ class lampserver( $username, $mode ) {
 
 /* Define defaults */
 	Exec { path => '/usr/bin:/bin:/usr/sbin:/sbin' }
+	$logdir = "/var/quickstart/logs"
+	$configdir = "/var/quickstart/config"
 
 	
 /* We can assume everything in quickstart-build/QuickBase/puppet/mainifests/quickbase/manifests/init.pp happened
@@ -25,7 +27,7 @@ class lampserver( $username, $mode ) {
 
 
 /* Install lampserver devops tools */
-	package { ['wget', 'git', 'subversion', 'cvs', 'mercurial', 'bzr' ]: ensure => installed, }
+	package { ['git', 'subversion', 'cvs', 'mercurial', 'bzr' ]: ensure => installed, }
 
 
 /* Install the lampserver::lamp stack */
@@ -45,9 +47,6 @@ class lampserver( $username, $mode ) {
 
 
 /* Setup Logs */
-
-	$logdir = "/var/quickstart/logs"
-	$configdir = "/var/quickstart/config"
 
 	file { "${logdir}": 
 		ensure => directory,
@@ -77,11 +76,11 @@ class lampserver( $username, $mode ) {
 
 
 /* Automatic security updates */
-	include lampserver::autoupdate
+	class { "lampserver::autoupdate": }
 
 
 /* all .dev domains point to localhost */
-	include lampserver::dnsmasq
+	class { "lampserver::dnsmasq": }
 
 }
 

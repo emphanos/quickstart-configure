@@ -1,3 +1,4 @@
+/* install and configure phpmyadmin */
 class lampserver::phpmyadmin ( $username, $mode ) {
 
 	exec { "phpmyadmin_config":
@@ -11,9 +12,11 @@ echo phpmyadmin       phpmyadmin/setup-password         password quickstart | su
 echo phpmyadmin       phpmyadmin/mysql/app-pass         password quickstart | sudo debconf-set-selections
 EOF",
 		require => Class[ [apache, php, mysql] ],
-	}
+	} ->
 
 	package { "phpmyadmin": 
 		require => Exec["phpmyadmin_config"],
 	}
+
+	/* FIXME configure */
 }
