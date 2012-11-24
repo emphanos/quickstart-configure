@@ -79,6 +79,13 @@ class lampserver( $username, $mode ) {
 	class { "lampserver::autoupdate": }
 
 
+/* Updates from cache */
+	if $params::debug == 'debug' {
+		file { "/etc/apt/apt.conf.d/01proxy":
+			content => "Acquire::http::Proxy \"http://<IP address or hostname of the apt-cacher server>:3142\";",
+		}
+	}
+
 /* all .dev domains point to localhost */
 	class { "lampserver::dnsmasq": }
 
