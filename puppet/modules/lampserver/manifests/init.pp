@@ -30,6 +30,14 @@ class lampserver( $username, $mode ) {
 	package { ['git', 'subversion', 'cvs', 'mercurial', 'bzr' ]: ensure => installed, }
 
 
+/* Configure some tools */
+	exec { "git_config": 
+		command => "git config --global color.ui true ; git config --global core.whitespace trailing-space,tab-in-indent",
+		user => $username,
+		require => Package[git],
+	}
+
+
 /* Install the lampserver::lamp stack */
 	class { "lampserver::lamp": username => $username, mode => $mode, }
 
@@ -77,14 +85,6 @@ class lampserver( $username, $mode ) {
 
 /* Automatic security updates */
 	class { "lampserver::autoupdate": }
-
-
-/* Updates from cache */
-	if $params::debug == 'debug' {
-		file { "/etc/apt/apt.conf.d/01proxy":
-			content => "Acquire::http::Proxy \"http://<IP address or hostname of the apt-cacher server>:3142\";",
-		}
-	}
 
 /* all .dev domains point to localhost */
 	class { "lampserver::dnsmasq": }

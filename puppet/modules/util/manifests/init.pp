@@ -43,4 +43,15 @@ define util::authfetch($source,$destination,$user,$password="",$timeout="0") {
   }
 }
 
+define util::addchunk($file, $sectionname, $lines='', $ensure = 'present') {
+  exec { "exec add ${sectionname} $file":
+    path => ["/bin", "/usr/bin" ],
+    command => "/bin/cat <<EOF >>'${file}'
 
+## PUPPET BEGIN ${sectionname}
+${lines}
+## PUPPET END ${sectionname}
+EOF",
+    unless => "grep -qFx '## PUPPET BEGIN ${sectionname}' '${file}'"
+  }
+}

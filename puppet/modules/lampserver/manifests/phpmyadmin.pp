@@ -18,5 +18,25 @@ EOF",
 		require => Exec["phpmyadmin_config"],
 	}
 
-	/* FIXME configure */
+	$phpmyadmin_config = "# Show 1000 rows instead of 30 by default
+\\\$cfg['MaxRows'] = 1000;
+# Show BLOB data as a string not hex.
+\\\$cfg['DisplayBinaryAsHex'] = false;
+# Show BLOB data in row detail pages.
+\\\$cfg['ProtectBinary'] = false;
+# Show BLOB data on table browse pages.  Hack to hardcode all requests.
+\\\$_REQUEST['display_blob'] = true;
+
+# Prevent timeout for a year at a time.
+\\\$cfg['LoginCookieValidity'] = 60*60*24*7*52;
+ini_set('session.gc_maxlifetime', \\\$cfg['LoginCookieValidity']);
+"
+
+	util::addchunk { "phpmyadmin_config":
+		file => "/etc/phpmyadmin/config.inc.php",
+		sectionname => "display config",
+		lines => $phpmyadmin_config,
+		require => Package[phpmyadmin],
+	}
+
 }

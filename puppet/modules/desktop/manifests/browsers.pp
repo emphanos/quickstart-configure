@@ -15,6 +15,7 @@ class desktop::browsers ($username, $mode) {
 	/* Download Firefox extensions to /usr/lib/firefox/extensions and they will be installed on next run */
 	/* https://addons.mozilla.org/en-US/firefox/collections/Quickstart/ */
 	/* These are installed during manualconfig.sh */
+	/* looked for better way here https://groups.google.com/d/topic/mozilla.dev.apps.firefox/Wd2XnIF1MaE/discussion */
 	$extensions = "/usr/lib/firefox/distribution/extensions"
 	util::fetch { "firebug":
 		source => "https://addons.mozilla.org/firefox/downloads/latest/1843/addon-1843-latest.xpi?src=collection&collection_id=66ca3c05-8aaf-44d8-ba37-c4169729ce5d",
@@ -73,7 +74,7 @@ class desktop::browsers ($username, $mode) {
 		destination => "${extensions}/fontinfo.xpi",
 	}
 	util::fetch { "firerainbow":
-		source => "",
+		source => "https://addons.mozilla.org/firefox/downloads/latest/9603/addon-9603-latest.xpi?src=collection&collection_id=66ca3c05-8aaf-44d8-ba37-c4169729ce5d",
 		destination => "${extensions}/firerainbow.xpi",
 	}
 	util::fetch { "dummylipsum":
@@ -85,5 +86,30 @@ class desktop::browsers ($username, $mode) {
 		destination => "${extensions}/dummyimages.xpi",
 	}
 
+
+	/* Chromium extensions:
+
+Framework Sniffer
+https://chrome.google.com/webstore/detail/homgcnaoacgigpkkljjjekpignblkeae
+
+Lorem Ipsum
+https://chrome.google.com/extensions/detail/dmpfoncmmihgkooacnplecaopcefceam
+
+Eye Dropper
+https://chrome.google.com/webstore/detail/hmdcmlfkchdmnmnmheododdhjedfccka
+
+Firebub lite
+https://chrome.google.com/webstore/detail/bmagokdooijbeehmkpknfglimnifench
+
+Measureit
+https://chrome.google.com/webstore/detail/aonjhmdcgbgikgjapjckfkefpphjpgma
+
+Live CSS
+https://chrome.google.com/webstore/detail/pcfngkdgaccedbamgamojgomaibafdcg
+
+YSlow
+https://chrome.google.com/webstore/detail/ninejjcohidippngpapiilnmkgllmakh
+
+*/
 
 }

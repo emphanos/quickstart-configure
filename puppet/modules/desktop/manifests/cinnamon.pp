@@ -1,5 +1,5 @@
 /* Install Cinnamon desktop */
-class desktop::cinnamon {
+class desktop::cinnamon ($username, $mode) {
 
 	/* install add-apt-repository command */
 	package { ['python-software-properties']: }
@@ -15,21 +15,15 @@ class desktop::cinnamon {
 		require => Exec["cinnamon_ppa"],
 	}
 
+	/* Configure Auto login */
+	file { "/etc/lightdm/lightdm.conf":
+		content => template("desktop/lightdm.conf.erb"),
+		require => Package[lightdm],
+	}
+		
 	/* Install Cinnamon desktop */	
 	package { ['cinnamon']:
-		require => Package[ubuntu-desktop],
+		require => Package[ [ubuntu-desktop], [gnome-session], [lightdm], [unity-greeter] ],
 	}
-
-	/* Disable Cinnamon screen saver */
-	exec { "screen_off": 
-		command => "gsettings set org.gnome.desktop.screensaver idle-activation-enabled false",
-		require => Package[cinnamon],
-	}
-	exec { "lock_off": 
-		command => "gsettings set org.gnome.desktop.lockdown disable-lock-screen true",
-		require => Package[cinnamon],
-	}
-
-
 
 }

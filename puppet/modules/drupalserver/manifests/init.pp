@@ -22,6 +22,22 @@ class drupalserver ( $username, $mode ) {
 	} ->
 	/* see lampserver:bash_profile for drush command completion */
 
+/* Install default make file */
+	/* Create the quickstart working directory */
+	file { "/var/quickstart/default.make":
+	  ensure => present,
+	  owner  => $username,
+	  group  => "www-data",
+	  mode   => 644,
+	  content => template("drupalserver/default.make.erb"),
+	} ->
+
+/* Install example sites */
+	exec { "d7_example":
+		command => "drush qsc --domain=example.dev",
+		require => Exec[drush-upgrade],
+	} ->
+
 
 /* Install Quickstart Drush Extensions */
 	exec { "quickstart-drush": 
