@@ -23,7 +23,6 @@ class drupalserver ( $username, $mode ) {
 	/* see lampserver:bash_profile for drush command completion */
 
 /* Install default make file */
-	/* Create the quickstart working directory */
 	file { "/var/quickstart/default.make":
 	  ensure => present,
 	  owner  => $username,
@@ -31,13 +30,6 @@ class drupalserver ( $username, $mode ) {
 	  mode   => 644,
 	  content => template("drupalserver/default.make.erb"),
 	} ->
-
-/* Install example sites */
-	exec { "d7_example":
-		command => "drush qsc --domain=example.dev",
-		require => Exec[drush-upgrade],
-	} ->
-
 
 /* Install Quickstart Drush Extensions */
 	exec { "quickstart-drush": 
@@ -57,6 +49,13 @@ class drupalserver ( $username, $mode ) {
 		group => $username,
 		target => '/var/quickstart/quickstart-drupal',
 		require => [File["/home/${username}/.drush"], Exec[quickstart-drush] ],
+	} ->
+
+/* Install example sites */
+	exec { "d7_example":
+		command => "drush qsc --domain=example.dev",
+		require => Exec[drush-upgrade],
 	}
+
 
 }

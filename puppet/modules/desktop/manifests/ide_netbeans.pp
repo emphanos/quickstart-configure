@@ -8,28 +8,36 @@ class desktop::ide_netbeans ($username, $mode) {
 /* install java */
 	package { [openjdk-6-jdk]: ensure => present }
 
-/* Getting the most recent version is very time consuming.  Just getting the package from Ubuntu is older, but fine FIXME */
-	package { [netbeans]: ensure => present, }
-/*
-	exec { "netbeans_download":
-		command => "wget ${source_url} --output-document=${destination}",
-		user => $username,
-		creates => $destination,
-		require => Package[openjdk-6-jdk],
-	} ->
-	exec { "netbeans_install_permissions":
-		command => "chmod 755 ${destination}",
-		user => $username,
-		require => [ Exec[netbeans_download], Package[openjdk-6-jdk] ], 
-	} ->
-		
-	exec { "netbeans_install":
-		command => "${destination} --silent --nospacecheck",
-		user => $username,
-		timeout => 900,
-		creates => $install_dir,
-		require => [ Exec[netbeans_install_permissions], Package[openjdk-6-jdk] ], 
-	}
-*/
+/* Getting the most recent version is very time consuming.  Just getting the package from Ubuntu is older, but fine for testing */
 
+	case $params::debug {
+		debug: {
+			package { [netbeans]: 
+				ensure => present,
+				require => Package[openjdk-6-jdk],
+			}
+		}
+		default: {
+		
+			exec { "netbeans_download":
+				command => "wget ${source_url} --output-document=${destination}",
+				user => $username,
+				creates => $destination,
+				require => Package[openjdk-6-jdk],
+			} ->
+			exec { "netbeans_install_permissions":
+				command => "chmod 755 ${destination}",
+				user => $username,
+				require => Exec[netbeans_download], 
+			} ->
+		
+			exec { "netbeans_install":
+				command => "${destination} --silent --nospacecheck",
+				user => $username,
+				timeout => 900,
+				creates => $install_dir,
+				require => [ Exec[netbeans_install_permissions], Package[openjdk-6-jdk] ], 
+			}
+		}
+	}
 }
